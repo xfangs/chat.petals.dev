@@ -33,6 +33,7 @@ def load_models() -> Dict[str, Tuple[PreTrainedModel, PreTrainedTokenizer, Model
                 active_adapter=backend_config.adapter,
                 torch_dtype=config.TORCH_DTYPE,
                 initial_peers=config.INITIAL_PEERS,
+                token=hf_token,
                 max_retries=3,
             )
             model = model.to(config.DEVICE)
