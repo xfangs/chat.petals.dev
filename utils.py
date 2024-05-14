@@ -4,7 +4,7 @@ import hivemind
 import os
 import torch
 from petals import AutoDistributedModelForCausalLM
-from transformers import AutoTokenizer, PreTrainedModel, PreTrainedTokenizer,HfFolder
+from transformers import AutoTokenizer, PreTrainedModel, PreTrainedTokenizer
 
 import config
 from data_structures import ModelConfig
@@ -15,17 +15,6 @@ logger = hivemind.get_logger(__file__)
 # 从环境变量获取 Hugging Face token
 hf_token = os.getenv('HUGGINGFACE_TOKEN')
 
-logger.info(f"hf_token: {hf_token}")
-
-
-if hf_token is not None:
-    # 存储 token 以供后续 from_pretrained 调用使用
-    HfFolder.save_token(hf_token)
-else:
-    raise ValueError("Hugging Face token not found in environment variables")
-
-
-
 def load_models() -> Dict[str, Tuple[PreTrainedModel, PreTrainedTokenizer, ModelConfig]]:
     models = {}
     for family in config.MODEL_FAMILIES.values():
@@ -33,7 +22,7 @@ def load_models() -> Dict[str, Tuple[PreTrainedModel, PreTrainedTokenizer, Model
             backend_config = model_config.backend
 
             logger.info(f"Loading tokenizer for {backend_config.repository}")
-            tokenizer = AutoTokenizer.from_pretrained(backend_config.repository, add_bos_token=False, use_fast=False)
+            tokenizer = AutoTokenizer.from_pretrained(backend_config.repository, add_bos_token=False, use_fast=False,use_auth_token=hf_token)
 
             logger.info(
                 f"Loading model {backend_config.repository} with adapter {backend_config.adapter} in {config.TORCH_DTYPE}"
