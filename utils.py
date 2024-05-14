@@ -30,10 +30,10 @@ def load_models() -> Dict[str, Tuple[PreTrainedModel, PreTrainedTokenizer, Model
             # We set use_fast=False since LlamaTokenizerFast takes a long time to init
             model = AutoDistributedModelForCausalLM.from_pretrained(
                 backend_config.repository,
+                token=hf_token,
                 active_adapter=backend_config.adapter,
                 torch_dtype=config.TORCH_DTYPE,
                 initial_peers=config.INITIAL_PEERS,
-                token=hf_token,
                 max_retries=3,
             )
             model = model.to(config.DEVICE)
