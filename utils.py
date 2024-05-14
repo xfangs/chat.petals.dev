@@ -12,9 +12,6 @@ from data_structures import ModelConfig
 logger = hivemind.get_logger(__file__)
 
 
-# 从环境变量获取 Hugging Face token
-hf_token = os.getenv('HUGGINGFACE_TOKEN')
-
 def load_models() -> Dict[str, Tuple[PreTrainedModel, PreTrainedTokenizer, ModelConfig]]:
     models = {}
     for family in config.MODEL_FAMILIES.values():
@@ -22,7 +19,7 @@ def load_models() -> Dict[str, Tuple[PreTrainedModel, PreTrainedTokenizer, Model
             backend_config = model_config.backend
 
             logger.info(f"Loading tokenizer for {backend_config.repository}")
-            tokenizer = AutoTokenizer.from_pretrained(backend_config.repository, add_bos_token=False, use_fast=False,use_auth_token=hf_token)
+            tokenizer = AutoTokenizer.from_pretrained(backend_config.repository, add_bos_token=False, use_fast=False)
 
             logger.info(
                 f"Loading model {backend_config.repository} with adapter {backend_config.adapter} in {config.TORCH_DTYPE}"
@@ -30,7 +27,6 @@ def load_models() -> Dict[str, Tuple[PreTrainedModel, PreTrainedTokenizer, Model
             # We set use_fast=False since LlamaTokenizerFast takes a long time to init
             model = AutoDistributedModelForCausalLM.from_pretrained(
                 backend_config.repository,
-                token=hf_token,
                 active_adapter=backend_config.adapter,
                 torch_dtype=config.TORCH_DTYPE,
                 initial_peers=config.INITIAL_PEERS,
