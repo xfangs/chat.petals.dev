@@ -1,6 +1,9 @@
 # 使用官方Python镜像作为基础镜像
 FROM python:3.10-slim
 
+# 安装git
+RUN apt-get update && apt-get install -y git
+
 # 设置工作目录
 WORKDIR /app
 
