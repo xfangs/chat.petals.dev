@@ -15,6 +15,9 @@ logger = hivemind.get_logger(__file__)
 # 从环境变量获取 Hugging Face token
 hf_token = os.getenv('HUGGINGFACE_TOKEN')
 
+logger.info(f"hf_token: {hf_token}")
+
+
 if hf_token is not None:
     # 存储 token 以供后续 from_pretrained 调用使用
     HfFolder.save_token(hf_token)
