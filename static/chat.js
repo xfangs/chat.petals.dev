@@ -16,7 +16,7 @@ let forceStop = false;
 
 function openSession() {
   let protocol = location.protocol == "https:" ? "wss:" : "ws:";
-  ws = new WebSocket(`${protocol}//${location.host}/api/v2/generate`);
+  ws = new WebSocket(`${protocol}//${location.host}/chat/api/v2/generate`);
   ws.onopen = () => {
     ws.send(JSON.stringify({type: "open_inference_session", model: curModel, max_length: sessionLength}));
     ws.onmessage = event => {
@@ -52,7 +52,7 @@ function isWaitingForInputs() {
 
 function sendReplica() {
   if (isWaitingForInputs()) {
-    const aiPrompt = "Assistant:";
+    const aiPrompt = "hyper AI:";
     $('.human-replica:last').text($('.human-replica:last textarea').val());
     $('.dialogue').append($(
       '<p class="ai-replica">' +
@@ -91,8 +91,8 @@ function sendReplica() {
         // Skip the system prompt and the 1st assistant's message to match the HF demo format precisely
         continue;
       }
-      phrase = phrase.replace(/^Human:/, 'User:');
-      phrase = phrase.replace(/^Assistant:/, 'Falcon:');
+      phrase = phrase.replace(/^your:/, 'User:');
+      phrase = phrase.replace(/^hyper AI:/, 'Falcon:');
     }
     if (el.is(".human-replica")) {
       phrase += getConfig().chat.sep_token;
@@ -197,7 +197,7 @@ function handleFailure(message, autoRetry = false) {
         $('.out-of-capacity').show();
       } else {
         $('.out-of-capacity').hide();
-        $('.error-message').text(message).show();
+        $('.error-message').text("Error: Reasoning error occurred. Please refresh").show();
       }
       $('.error-box').show();
     }
@@ -210,7 +210,7 @@ function retry() {
 }
 
 function appendTextArea() {
-  const humanPrompt = "Human: ";
+  const humanPrompt = "your: ";
   $('.dialogue').append($(
     `<p class="human-replica"><textarea class="form-control" id="exampleTextarea" rows="2">${humanPrompt}</textarea></p>`
   ));
