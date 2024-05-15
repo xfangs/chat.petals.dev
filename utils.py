@@ -1,7 +1,6 @@
 from typing import Dict, List, Tuple, Union
 
 import hivemind
-import os
 import torch
 from petals import AutoDistributedModelForCausalLM
 from transformers import AutoTokenizer, PreTrainedModel, PreTrainedTokenizer
