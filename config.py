@@ -14,18 +14,9 @@ default_chat_config = ModelChatConfig(
 MODEL_FAMILIES = {
     "Llama 2": [
         ModelConfig(
-            ModelBackendConfig(repository="meta-llama/Llama-2-13b-chat-hf", aliases=["meta-llama/Llama-2-13b-chat-hf"]),
-            ModelFrontendConfig(
-                name="meta-llama/Llama-2-13b-chat-hf",
-                model_card="https://huggingface.co/meta-llama/Llama-2-13b-chat-hf",
-                license="https://huggingface.co/stabilityai/StableBeluga2/blob/main/LICENSE.txt",
-            ),
-            default_chat_config,
-        ),
-      ModelConfig(
             ModelBackendConfig(repository="meta-llama/Llama-2-70b-chat-hf", aliases=["meta-llama/Llama-2-70b-chat-hf"]),
             ModelFrontendConfig(
-                name="meta-llama/Llama-2-13b-chat-hf",
+                name="meta-llama/Llama-2-70b-chat-hf",
                 model_card="https://huggingface.co/meta-llama/Llama-2-70b-chat-hf",
                 license="https://huggingface.co/stabilityai/StableBeluga2/blob/main/LICENSE.txt",
             ),
@@ -99,7 +90,7 @@ MODEL_FAMILIES = {
 
 INITIAL_PEERS = PUBLIC_INITIAL_PEERS
 # Set this to a list of multiaddrs to connect to a private swarm instead of the public one, for example:
-INITIAL_PEERS = ['/ip4/172.31.15.110/tcp/31337/p2p/QmdTF9WUfmZAtiRH2FiDTE32S72iLv1gvmiMC58tCtBVJg']
+INITIAL_PEERS = ['/ip4/13.202.115.78/tcp/31337/p2p/QmYwp7t6zPZB4bwbhdKcJ8WqHEyA14fWLf4inrysS3r9Ye']
 
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
