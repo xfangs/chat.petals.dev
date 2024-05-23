@@ -14,13 +14,39 @@ default_chat_config = ModelChatConfig(
 MODEL_FAMILIES = {
     "Llama 2": [
         ModelConfig(
-            ModelBackendConfig(repository="meta-llama/Llama-2-70b-chat-hf", aliases=["meta-llama/Llama-2-70b-chat-hf"]),
+            ModelBackendConfig(repository="meta-llama/Llama-2-13b-chat-hf", aliases=["meta-llama/Llama-2-13b-chat-hf"]),
             ModelFrontendConfig(
-                name="meta-llama/Llama-2-70b-chat-hf",
-                model_card="https://huggingface.co/meta-llama/Llama-2-70b-chat-hf",
+                name="meta-llama/Llama-2-13b-chat-hf",
+                model_card="https://huggingface.co/meta-llama/Llama-2-13b-chat-hf",
                 license="https://huggingface.co/stabilityai/StableBeluga2/blob/main/LICENSE.txt",
             ),
             default_chat_config,
+        ),
+        # ModelConfig(
+        #     ModelBackendConfig(repository="meta-llama/Llama-2-70b-chat-hf"),
+        #     ModelFrontendConfig(
+        #         name="Llama 2 (70B-Chat)",
+        #         model_card="https://huggingface.co/meta-llama/Llama-2-70b-chat-hf",
+        #         license="https://bit.ly/llama2-license",
+        #     ),
+        #     default_chat_config,
+        # ),
+    ],
+    "Llama 3": [
+        ModelConfig(
+            ModelBackendConfig(repository="postitive666/llama3_ruozhiba_8b", aliases=["postitive666/llama3_ruozhiba_8b"]),
+            ModelFrontendConfig(
+                name="postitive666/llama3_ruozhiba_8b",
+                model_card="https://huggingface.co/postitive666/llama3_ruozhiba_8b",
+                license="https://huggingface.co/stabilityai/StableBeluga2/blob/main/LICENSE.txt",
+            ),
+            ModelChatConfig(
+            max_session_length=8192,
+            sep_token="###",
+            stop_token=".</s>",
+            extra_stop_sequences=["###"],
+            generation_params=dict(do_sample=1, temperature=0.6, top_p=0.9),
+           ),
         ),
         # ModelConfig(
         #     ModelBackendConfig(repository="meta-llama/Llama-2-70b-chat-hf"),
