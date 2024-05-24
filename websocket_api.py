@@ -44,8 +44,12 @@ def ws_api_generate(ws):
                 extra_stop_sequences = request.get("extra_stop_sequences")
                 if extra_stop_sequences is not None:
                     cont_token = tokenizer(stop_sequence, return_tensors="pt")["input_ids"].to(config.DEVICE)
-                    if cont_token.shape != (1, 1):
-                        raise ValueError("extra_stop_sequences require stop_sequence length to be exactly 1 token")
+                    
+                logger.info(f"stop_sequence: {stop_sequence}")
+                logger.info(f"cont_token: {cont_token}")
+
+                if cont_token.shape != (1, 1):
+                    raise ValueError("extra_stop_sequences require stop_sequence length to be exactly 1 token")
 
                 all_outputs = ""
                 delta_q = []
